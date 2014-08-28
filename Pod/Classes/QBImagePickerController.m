@@ -182,7 +182,6 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 - (void)loadAssetsGroupsWithTypes:(NSArray *)types completion:(void (^)(NSArray *assetsGroups))completion
 {
     __block NSMutableArray *assetsGroups = [NSMutableArray array];
-    __block NSUInteger numberOfFinishedTypes = 0;
     
     ALAssetsGroupType assetsGroupType = 0;
     for (NSNumber *type in types) {
@@ -201,11 +200,6 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
                                                   [assetsGroups addObject:assetsGroup];
                                               }
                                           } else {
-                                              numberOfFinishedTypes++;
-                                          }
-                                          
-                                          // Check if the loading finished
-                                          if (numberOfFinishedTypes == types.count) {
                                               // Sort assets groups
                                               NSArray *sortedAssetsGroups = [self sortAssetsGroups:(NSArray *)assetsGroups typesOrder:types];
                                               
