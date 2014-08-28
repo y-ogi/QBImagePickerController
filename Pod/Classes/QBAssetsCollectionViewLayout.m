@@ -20,7 +20,11 @@
     self = [super init];
     
     if (self) {
-        self.minimumLineSpacing = 2.0;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.minimumLineSpacing = 14.0;
+        } else {
+            self.minimumLineSpacing = 2.0;
+        }
         self.minimumInteritemSpacing = 2.0;
     }
     

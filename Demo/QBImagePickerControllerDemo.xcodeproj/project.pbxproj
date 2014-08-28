@@ -291,7 +291,7 @@
 				ORGANIZATIONNAME = "Katsuma Tanaka";
 				TargetAttributes = {
 					AAD64EB818710798004C3AD5 = {
-						DevelopmentTeam = 727C3SULLK;
+						DevelopmentTeam = 8BZWXZ8368;
 					};
 					AAD64ED918710798004C3AD5 = {
 						TestTargetID = AAD64EB818710798004C3AD5;
@@ -496,8 +496,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QBImagePickerControllerDemo/QBImagePickerControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "QBImagePickerControllerDemo/QBImagePickerControllerDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -512,8 +514,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QBImagePickerControllerDemo/QBImagePickerControllerDemo-Prefix.pch";
 				INFOPLIST_FILE = "QBImagePickerControllerDemo/QBImagePickerControllerDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
