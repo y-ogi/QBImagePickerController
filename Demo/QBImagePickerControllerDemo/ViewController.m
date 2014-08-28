@@ -92,4 +92,12 @@
     [self dismissImagePickerController];
 }
 
+- (void)qb_imagePickerControllerDidFail:(QBImagePickerController *)imagePickerController
+{
+    NSLog(@"*** qb_imagePickerControllerDidFail:");
+    
+    [self dismissImagePickerController];
+    
+}
+
 @end

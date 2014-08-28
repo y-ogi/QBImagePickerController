@@ -184,37 +184,43 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     __block NSMutableArray *assetsGroups = [NSMutableArray array];
     __block NSUInteger numberOfFinishedTypes = 0;
     
+    ALAssetsGroupType assetsGroupType = 0;
     for (NSNumber *type in types) {
-        __weak typeof(self) weakSelf = self;
-        
-        [self.assetsLibrary enumerateGroupsWithTypes:[type unsignedIntegerValue]
-                                          usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop) {
-                                              if (assetsGroup) {
-                                                  // Filter the assets group
-                                                  [assetsGroup setAssetsFilter:ALAssetsFilterFromQBImagePickerControllerFilterType(weakSelf.filterType)];
-                                                  
-                                                  if (assetsGroup.numberOfAssets > 0) {
-                                                      // Add assets group
-                                                      [assetsGroups addObject:assetsGroup];
-                                                  }
-                                              } else {
-                                                  numberOfFinishedTypes++;
-                                              }
-                                              
-                                              // Check if the loading finished
-                                              if (numberOfFinishedTypes == types.count) {
-                                                  // Sort assets groups
-                                                  NSArray *sortedAssetsGroups = [self sortAssetsGroups:(NSArray *)assetsGroups typesOrder:types];
-                                                  
-                                                  // Call completion block
-                                                  if (completion) {
-                                                      completion(sortedAssetsGroups);
-                                                  }
-                                              }
-                                          } failureBlock:^(NSError *error) {
-                                              NSLog(@"Error: %@", [error localizedDescription]);
-                                          }];
+        assetsGroupType = assetsGroupType | [type unsignedIntegerValue];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    [self.assetsLibrary enumerateGroupsWithTypes:assetsGroupType
+                                      usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop) {
+                                          if (assetsGroup) {
+                                              // Filter the assets group
+                                              [assetsGroup setAssetsFilter:ALAssetsFilterFromQBImagePickerControllerFilterType(weakSelf.filterType)];
+                                              
+                                              if (assetsGroup.numberOfAssets > 0) {
+                                                  // Add assets group
+                                                  [assetsGroups addObject:assetsGroup];
+                                              }
+                                          } else {
+                                              numberOfFinishedTypes++;
+                                          }
+                                          
+                                          // Check if the loading finished
+                                          if (numberOfFinishedTypes == types.count) {
+                                              // Sort assets groups
+                                              NSArray *sortedAssetsGroups = [self sortAssetsGroups:(NSArray *)assetsGroups typesOrder:types];
+                                              
+                                              // Call completion block
+                                              if (completion) {
+                                                  completion(sortedAssetsGroups);
+                                              }
+                                          }
+                                      } failureBlock:^(NSError *error) {
+                                          NSLog(@"Error: %@", [error localizedDescription]);
+                                          if (self.delegate && [self.delegate respondsToSelector:@selector(qb_imagePickerControllerDidFail:)]) {
+                                              [self.delegate qb_imagePickerControllerDidFail:self];
+                                          }
+                                      }];
+
 }
 
 - (NSArray *)sortAssetsGroups:(NSArray *)assetsGroups typesOrder:(NSArray *)typesOrder
